@@ -41,6 +41,16 @@ public class PersonService {
         return mapToResponse(savedPerson);
     }
 
+    // READ ALL
+    @Transactional(readOnly = true)
+    public List<PersonResponse> getAll() {
+
+        return personRepository.findAll()
+                .stream()
+                .map(this::mapToResponse)
+                .toList();
+    }
+
     private PersonResponse mapToResponse(Person person) {
 
         return new PersonResponse(
@@ -49,5 +59,6 @@ public class PersonService {
                 person.getEmail()
         );
     }
+
 
 }
