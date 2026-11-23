@@ -60,6 +60,41 @@ public class PersonService {
         return mapToResponse(person);
     }
 
+    // UPDATE
+    @Transactional
+    public PersonResponse updatePerson(Long id, PersonRequest request) {
+
+        Person person = findPersonOrThrow(id);
+
+        boolean emailUsedByAnotherPerson =
+                personRepository.existsByEmailAndIdNot(
+                        request.email(),
+                        id
+                );
+
+        if (emailUsedByAnotherPerson) {
+            throw new DuplicateResourceException(
+                    "Another student is already using this email"
+            );
+        }
+
+        person.setName(request.name());
+        person.setEmail(request.email());
+
+        Person updatedPerson = personRepository.save(person);
+
+        return mapToResponse(updatedPerson);
+    }
+
+    // DELETE
+    @Transactional
+    public void deleteStudent(Long id) {
+
+        Person person = findPersonOrThrow(id);
+
+        personRepository.delete(person);
+    }
+
     private Person findPersonOrThrow(Long id) {
 
         return personRepository.findById(id)
