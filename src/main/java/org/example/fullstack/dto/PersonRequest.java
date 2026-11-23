@@ -6,7 +6,7 @@ public record PersonRequest(
 
         @NotBlank(message = "Name is required")
         @Size(max = 100, message = "Name must not exceed 100 characters")
-        String lastName,
+        String name,
 
         @NotBlank(message = "Email is required")
         @Email(message = "Enter a valid email address")
