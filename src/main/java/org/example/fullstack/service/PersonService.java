@@ -51,6 +51,23 @@ public class PersonService {
                 .toList();
     }
 
+    // READ ONE
+    @Transactional(readOnly = true)
+    public PersonResponse getPersonById(Long id) {
+
+        Person person = findPersonOrThrow(id);
+
+        return mapToResponse(person);
+    }
+
+    private Person findPersonOrThrow(Long id) {
+
+        return personRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException(
+                        "Student not found with ID: " + id
+                ));
+    }
+
     private PersonResponse mapToResponse(Person person) {
 
         return new PersonResponse(
