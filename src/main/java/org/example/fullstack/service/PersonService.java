@@ -27,7 +27,7 @@ public class PersonService {
 
         if (personRepository.existsByEmail(request.email())) {
             throw new DuplicateResourceException(
-                    "A student with this email already exists"
+                    "A person with this email already exists"
             );
         }
 
@@ -74,7 +74,7 @@ public class PersonService {
 
         if (emailUsedByAnotherPerson) {
             throw new DuplicateResourceException(
-                    "Another student is already using this email"
+                    "Another person is already using this email"
             );
         }
 
@@ -88,7 +88,7 @@ public class PersonService {
 
     // DELETE
     @Transactional
-    public void deleteStudent(Long id) {
+    public void deletePerson(Long id) {
 
         Person person = findPersonOrThrow(id);
 
@@ -99,7 +99,7 @@ public class PersonService {
 
         return personRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        "Student not found with ID: " + id
+                        "Person not found with ID: " + id
                 ));
     }
 

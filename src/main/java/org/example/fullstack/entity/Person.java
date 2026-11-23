@@ -10,15 +10,19 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="people")
 
+@Entity
+@Table(name="people")
 public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name="name",nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String email;
 
 }
